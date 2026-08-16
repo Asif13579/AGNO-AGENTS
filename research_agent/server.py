@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from chat_agent import agent  
+from .chat_agent import agent  
 
 app=FastAPI()
 
@@ -11,8 +11,10 @@ class QueryResponse(BaseModel):
     response: str
 
 @app.post("/research",response_model=QueryResponse)
-async def research(request: QueryResponse):
+async def research(request: QueryRequest):
     response=agent.run(request.query)
+    print("RAW RESPONSE:")
+    print(response)
     # Safely access possible attributes on the agent result; try common names then fall back to stringified response.
     text=getattr(response,"output_text",None) or getattr(response,"output",None) or str(response)
 

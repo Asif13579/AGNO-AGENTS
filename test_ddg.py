@@ -1,10 +1,7 @@
-from ddgs import DDGS
+from research_agent.chat_agent import agent
 
-with DDGS() as ddgs:
-    results = list(ddgs.text("Agentic AI", max_results=5))
+response = agent.run(
+    "What is Agentic AI?"
+)
 
-print(results)
-from ddgs import DDGS
-
-results = DDGS().text("Agentic AI")
-print(results[:5])
+print(response)
